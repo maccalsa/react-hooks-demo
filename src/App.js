@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useForm from './useForm'
+import Hello from './Hello'
 
 // this could get very large, very fast based on how long our form is
 // is there a better way??
@@ -10,19 +11,12 @@ const App = () => {
     firstName: '',
   })
 
-  useEffect(() => {
-    console.log('I changed the password')
-  }, [values.password])
-
-  useEffect(() => {
-    console.log('I changed the email or firstName')
-    // Note that only a shallow comparison is done here, so every time these values change, this effect is triggerd.
-    // if we just put 'values' in here, it would trigger on ANY change to that object
-    // so if you want an effect to onlu trigger on specific values, make sure that they have been decomposed here
-  }, [values.firstName, values.email])
+  const [show, setShow] = useState(false)
 
   return (
     <div>
+      <button onClick={() => setShow((s) => !s)}>toggle</button>
+      {show && <Hello />}
       <input
         name="firstName"
         placeholder="first name"
