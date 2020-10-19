@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
+import useForm from './useForm'
 
 // this could get very large, very fast based on how long our form is
 // is there a better way??
@@ -8,24 +9,17 @@ const App = () => {
     password: '',
   })
 
-  // when this component is rerendered this will get called.
   useEffect(() => {
-    effect
-    // this will cleanup the component (if required on unmount)
-    // For example say on render we subscribe to a listenener. here you would unsubscribe
-    return () => {
-      cleanup
-    }
-    // this is how you get the component to render less than its, default which is (EVERY TIME SOMETHING HAPPENS)
-  }, [input])
+    console.log('I changed the password')
+  }, [values.password])
 
   return (
     <div>
-      <input name="email" value={email} onChange={handleChange} />
+      <input name="email" value={values.email} onChange={handleChange} />
       <input
         name="password"
         type="password"
-        value={password}
+        value={values.password}
         onChange={handleChange}
       />
     </div>
