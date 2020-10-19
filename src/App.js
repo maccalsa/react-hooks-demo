@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import useForm from './useForm'
 import Hello from './Hello'
 
-// this could get very large, very fast based on how long our form is
-// is there a better way??
 const App = () => {
   const [values, handleChange] = useForm({
     email: '',
@@ -11,12 +9,20 @@ const App = () => {
     firstName: '',
   })
 
-  const [show, setShow] = useState(false)
+  useEffect(() => {
+    const onMouseMove = (e) => {
+      console.log(e)
+    }
+
+    window.addEventListener('mousemove', onMouseMove)
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+    }
+  }, [])
 
   return (
     <div>
-      <button onClick={() => setShow((s) => !s)}>toggle</button>
-      {show && <Hello />}
       <input
         name="firstName"
         placeholder="first name"
