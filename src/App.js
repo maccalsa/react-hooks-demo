@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 
+// this could get very large, very fast based on how long our form is
+// is there a better way??
 const App = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [values, handleChange] = useForm({
+    email: '',
+    password: '',
+  })
   return (
     <div>
-      <input
-        name="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <input name="email" value={email} onChange={handleChange} />
       <input
         name="password"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handleChange}
       />
     </div>
   )
