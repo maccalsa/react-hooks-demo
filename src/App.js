@@ -1,26 +1,23 @@
 import React, { useState } from 'react'
 
-const expensiveInitialState = () => {
-  //expensive work
-  return 10
-}
-
 const App = () => {
-  const [state, setstate] = useState(10)
-
-  // this will be called the 1st time, and not every time the component remders
-  const [state2, setstate2] = useState(() => expensiveInitialState)
-
-  const [count, setCount] = useState(0)
-
+  const [{ count, count2 }, setCount] = useState({ count: 10, count2: 20 })
   return (
     <div>
-      <button onClick={() => setCount(count + 1)}>+</button>
-      {/* The way below is a little safer, as it prevents race conditions if you have multiple events that can change 'count*/}
-      <button onClick={() => setCount((currentCount) => currentCount + 1)}>
+      <button
+        onClick={() =>
+          // this unlike class component state, will replace all state, it does NO MERGING, so if you want state to be maintained
+          //when using hooks you have to copy the other state over
+          setCount((currentState) => ({
+            ...currentState,
+            count: currentState.count + 1,
+          }))
+        }
+      >
         +
       </button>
-      <div>{count}</div>
+      <div>Count 1 : {count}</div>
+      <div>Count 2 : {count2}</div>
     </div>
   )
 }
