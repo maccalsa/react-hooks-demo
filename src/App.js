@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useForm from './useForm'
 import Hello from './Hello'
+import useFetch from './useFetch'
 
 const App = () => {
   const [values, handleChange] = useForm({
@@ -9,39 +10,16 @@ const App = () => {
     firstName: '',
   })
 
-  useEffect(() => {
-    const onMouseMove = (e) => {
-      console.log(e)
-    }
-
-    window.addEventListener('mousemove', onMouseMove)
-
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-    }
-  }, [])
+  const [count, setCount] = useState(1)
+  const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`)
 
   return (
     <div>
-      <input
-        name="firstName"
-        placeholder="first name"
-        value={values.firstName}
-        onChange={handleChange}
-      />
-      <input
-        name="email"
-        placeholder="email"
-        value={values.email}
-        onChange={handleChange}
-      />
-      <input
-        name="password"
-        type="password"
-        placeholder="password"
-        value={values.password}
-        onChange={handleChange}
-      />
+      <div>{loading ? '...' : data}</div>
+      <div>Count : {count}</div>
+      <div>
+        <button onClick={() => setCount((c) => c + 1)}>+</button>
+      </div>
     </div>
   )
 }
